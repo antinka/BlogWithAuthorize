@@ -1,0 +1,15 @@
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\BlogUsingEF.BLL.dll
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\BlogUsingEF.BLL.pdb
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\AutoMapper.dll
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\BlogUsingEF.DAL.dll
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\Ninject.dll
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\EntityFramework.dll
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\BlogUsingEF.DAL.pdb
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\BlogUsingEF.DAL.dll.config
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\AutoMapper.xml
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\Ninject.xml
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\bin\Debug\EntityFramework.xml
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\obj\Debug\BlogUsingEF.BLL.csprojResolveAssemblyReference.cache
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\obj\Debug\BlogUsingEF.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\obj\Debug\BlogUsingEF.BLL.dll
+C:\Users\Antin\Desktop\BlogUsingEF\BlogUsingEF.BLL\obj\Debug\BlogUsingEF.BLL.pdb

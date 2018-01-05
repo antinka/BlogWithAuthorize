@@ -1,0 +1,28 @@
+﻿@model IEnumerable<BlogUsingEF.Models.CommentView>
+
+@{
+    ViewBag.Title = "ViewComment";
+}
+
+<h2>Коментарии к статье @ViewBag.NameArticle</h2>
+
+
+<table class="table">
+@foreach (var item in Model)
+{
+    <tr >
+        <th>
+            Дата публикации
+        </th>
+        <td>
+            @item.DataPublish
+        </td>
+    </tr>
+        <tr>
+            <td colspan="4" align="center">
+                @item.Text
+            </td>
+        </tr>
+}
+
+</table>

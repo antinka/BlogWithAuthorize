@@ -1,0 +1,146 @@
+﻿@model IEnumerable<BlogUsingEF.Models.ArticleView>
+
+@Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+            var usr = Session["UserName"];
+}
+@if (usr != null)
+{
+        @Html.ActionLink("Добавить статью", "AddArticle")
+}
+
+
+<div>
+    @section Voting{
+    @using (Ajax.BeginForm("Vote", new AjaxOptions { UpdateTargetId = "resultVote" }))
+    {
+        <div id="resultVote">
+        <label for="like">Вам нравится наш сайт?</label> <br />
+        @Html.RadioButton("like", "true")
+        <span>Да</span><br />
+        @Html.RadioButton("like", "false")
+        <span>Нет</span><br />
+        <input type="submit" value="Голосовать" class="btn btn-default" />
+    </div>
+    } 
+    }
+</div>
+
+<table class="table" border="0">
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DataPublish)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataPublish)
+                    </td>
+                </tr>
+                    <tr >
+                        <td colspan="4" align="center">
+                            @if (item.Text.Length > 200)
+                {
+                                @Html.DisplayFor(modelItem => item.Text).ToString().Substring(0, 200)
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Text)
+                            }
+                        </td>
+                    </tr>
+                <tr>
+               
+
+                <td colspan="4">
+                    @using (Html.BeginForm("detailsArticle", "Home"))
+                {
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <div class="form-group">
+                            <div style="text-align: right;">
+                                <input type="submit" value="подробней" class="btn btn-default" />
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>
+    }
+
+</table>
+
+
+
+
+
+
+    @*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataPublish)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPublish)
+                </td>
+                <td>
+                    @if (item.Text.Length > 200)
+                    {
+                     @Html.DisplayFor(modelItem => item.Text).ToString().Substring(0, 200)
+                    }
+                    else
+                    {
+                       @Html.DisplayFor(modelItem => item.Text)
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("посмотреть комментарии", "ViewComment", new { id = item.Id })
+                </td>
+                @if (usr != null)
+                {
+                    <td>
+                        @Html.ActionLink("Добавить комментарий", "AddComment", new { id = item.Id })
+                    </td>
+                }
+                <td>
+                    @using (Html.BeginForm("detailsArticle", "Home"))
+                    {
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="подробней" />
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>*@

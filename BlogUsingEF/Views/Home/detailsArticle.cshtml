@@ -1,0 +1,65 @@
+﻿@model IEnumerable<BlogUsingEF.Models.ArticleView>
+
+@{
+    ViewBag.Title = "detailsArticle";
+}
+
+@{
+            var usr = Session["UserName"];
+}
+<table class="table">
+@foreach (var item in Model)
+        {
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPublish)
+        </th>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPublish)
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" align="center">
+           
+               @Html.DisplayFor(modelItem => item.Text) 
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            @if (item.Tags.Length != 0)
+            {
+                string[] tags = item.Tags.Split('#');
+                foreach (string tag in tags)
+                {
+                    if (tag.Trim() != "")
+                    {
+                        @Html.ActionLink(" #" + @tag + " ", "SearchForTag", new { tag = tag })
+                    }
+                }
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.Tags)
+            }
+        </td>
+    </tr>
+        <tr >
+            @if (usr != null)
+            {
+                <td colspan="3"  align="right">
+                    @Html.ActionLink("Добавить комментарий", "AddComment", new { id = item.Id })
+                </td>
+            }
+            <td colspan="4" align="right">
+                @Html.ActionLink("посмотреть комментарии", "ViewComment", new { id = item.Id })
+            </td>
+        </tr>
+}
+
+</table>
