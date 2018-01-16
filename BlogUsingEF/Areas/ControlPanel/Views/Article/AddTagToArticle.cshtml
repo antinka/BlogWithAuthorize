@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "AddTagToArticle";
+}
+
+<h2>AddTagToArticle</h2>
+@using (Html.BeginForm())
+{
+            @Html.ListBox("Text", ViewBag.tags as MultiSelectList)
+    <input type="hidden" name="idArticle" value="@ViewBag.id " />
+    <p><input type="submit" value="Отправить" /></p>
+}

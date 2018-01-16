@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Анкета";
+}
+
+<h2>Анкета</h2>
+
+@helper PrintUncountedList(string[] str)
+{
+    <ul>
+        @foreach (string s in str)
+        {
+            <li>@s</li>
+        }
+    </ul>
+}
+
+@using (Html.BeginForm("Anket", "Anket"))
+{
+    <label for="Name">Имя</label>
+        @Html.TextBox("Name", "", new { @class = "form-control" }) <br />
+            <label for="Gender">Выберете пол</label> <br />
+            @Html.RadioButton("Gender", "F")
+            <span> Женский</span><br />
+            @Html.RadioButton("Gender", "M")
+            <span> Мужской </span><br />
+            <label for="Operator">Выберите оператора которым пользуетесь</label><br />
+            @PrintUncountedList(new string[] { "039 xxx xx xx - Киевстар (Golden Telecom)",
+    "050 xxx xx xx - МТС",
+    "063 xxx xx xx - life:)",
+    "066 xxx xx xx - МТС",
+    "067 xxx xx xx - Киевстар",
+    "068 xxx xx xx - Киевстар(Beeline)",
+    "091 xxx xx xx - Utel",
+    "092 xxx xx xx - PEOPLEnet",
+    "093 xxx xx xx - life:)",
+    "094 xxx xx xx - Интертелеком",
+    "095 xxx xx xx - МТС",
+    "096 xxx xx xx - Киевстар",
+    "097 xxx xx xx - Киевстар" });
+    <input type="checkbox" name="Operator" value="Киевстар" />    <span> Киевстар </span><br />
+            <input type="checkbox" name="Operator" value="МТС Украина / Vodafone" />    <span>МТС Украина / Vodafone </span><br />
+            <input type="checkbox" name="Operator" value="Lifecell" />    <span> Lifecell </span><br />
+            <input type="checkbox" name="Operator" value="Интертелеком" />    <span> Интертелеком </span><br />
+            <input type="checkbox" name="Operator" value="Другой" />    <span> Другой </span><br />
+            <label for="UseCodeOperatop">Введите код мобильного оператора который вы используете, но он не указан выше</label>
+            @Html.TextBox("UseCodeOperatop", "", new { @class = "form-control" });<br />
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Отправить" class="btn btn-default" />
+                </div>
+            </div>
+}

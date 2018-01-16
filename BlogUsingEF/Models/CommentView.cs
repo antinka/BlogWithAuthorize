@@ -14,7 +14,7 @@ namespace BlogUsingEF.Models
         [Display(Name = "Коментарий")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Введите текст коментария")]
         public string Text { get; set; }
-        public int ArticleId { get; set; }
+        public int?ArticleId { get; set; }
        
     }
 }

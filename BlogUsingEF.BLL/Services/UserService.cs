@@ -1,90 +1,74 @@
-﻿using BlogUsingEF.BLL.Interfaces;
-using System;
+﻿using BlogUsingEF.BLL.DTO;
+using BlogUsingEF.BLL.Infrastructure;
+using BlogUsingEF.BLL.Interfaces;
+using BlogUsingEF.DAL.Entities;
+using BlogUsingEF.DAL.Interfaces;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlogUsingEF.BLL.DTO;
-using BlogUsingEF.DAL.Interfaces;
-using AutoMapper;
-using BlogUsingEF.DAL.Entities;
-using BlogUsingEF.DAL.Repositories;
 
 namespace BlogUsingEF.BLL.Services
 {
-   public class UserService : IUserServicesAddEnter
+    public class UserService : IUserService
     {
-
         IUnitOfWork Database { get; set; }
 
         public UserService(IUnitOfWork uow)
         {
             Database = uow;
         }
-        //return all users from db
-        public IEnumerable<UserDTO> GetUsers()
+
+        public async Task<OperationDetails> Create(UserDTO userDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>());
-            IMapper mapper = config.CreateMapper();
-            return mapper.Map<IEnumerable<User>, List<UserDTO>>(Database.Users.GetList());
-        }
-        // take user by id
-        public UserDTO GetUsersById(int id)
-        {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>());
-            IMapper mapper = config.CreateMapper();
-            UserDTO userDTO = mapper.Map<User, UserDTO>(Database.Users.GetById(id));
-            return userDTO;
-        }
-        //add new user
-        public UserDTO AddNewUser(UserDTO userDTO)
-        {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>());
-            IMapper mapper = config.CreateMapper();
-            User user = mapper.Map<UserDTO, User>(userDTO);
-            try
+            //Find if login unic.
+            ApplicationUser user = await Database.ApplicationUserManager.FindByEmailAsync(userDto.UserName);
+            if (user == null)
             {
-                var ifExistUserName = (from b in Database.Users.GetList() where b.UserName == user.UserName select b).Count();
-                if (ifExistUserName == 0)
-                {
-                    Database.Users.Create(user);
-                    Database.Users.Save();
-                    userDTO.Id = user.Id;
-                    return userDTO;
-                }
-                else
-                {
-                    throw new Exception();
-                }
+                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.UserName };
+                //Add new user.
+                var result = await Database.ApplicationUserManager.CreateAsync(user, userDto.Password);
+                if (result.Errors.Count() > 0)
+                    return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
+                // Add role to current user.
+                await Database.ApplicationUserManager.AddToRoleAsync(user.Id, userDto.Role);
+                await Database.SaveAsync();
+                return new OperationDetails(true, "Регистрация успешно пройдена", "");
             }
-            catch
+            else
             {
-                throw new Exception();
+                return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
             }
         }
-        // check if this user esist in db and if so then return they data
-        public UserDTO EnterToSystem(UserDTO userDTO)
+
+        public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>());
-            IMapper mapper = config.CreateMapper();
-            User user = mapper.Map<UserDTO, User>(userDTO);
-            try
+            ClaimsIdentity claim = null;
+            // Find user by name and password.
+            ApplicationUser user = await Database.ApplicationUserManager.FindAsync(userDto.UserName, userDto.Password);
+            // Autorize and return claim.
+            if (user != null)
+                claim = await Database.ApplicationUserManager.CreateIdentityAsync(user,
+                                            DefaultAuthenticationTypes.ApplicationCookie);
+            return claim;
+        }
+        public async Task SetInitialData(UserDTO adminDto, List<string> roles)
+        {
+            foreach (string roleName in roles)
             {
-                var detailsUser= Database.Users.GetList().Single(u => u.UserName == user.UserName && u.Password == user.Password);
-                if (detailsUser!= null)
+                var role = await Database.ApplicationRoleManager.FindByNameAsync(roleName);
+                if (role == null)
                 {
-                    userDTO.Id = detailsUser.Id;
-                    return userDTO;
-                }
-                else
-                {
-                    throw new Exception();
+                    role = new ApplicationRole { Name = roleName };
+                    await Database.ApplicationRoleManager.CreateAsync(role);
                 }
             }
-            catch
-            {
-                throw new Exception();
-            }
+            await Create(adminDto);
+        }
+        public void Dispose()
+        {
+            Database.Dispose();
         }
     }
 }

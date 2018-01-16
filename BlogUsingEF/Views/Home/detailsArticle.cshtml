@@ -1,12 +1,9 @@
 ﻿@model IEnumerable<BlogUsingEF.Models.ArticleView>
 
 @{
-    ViewBag.Title = "detailsArticle";
+    ViewBag.Title = "DetailsArticle";
 }
 
-@{
-            var usr = Session["UserName"];
-}
 <table class="table">
 @foreach (var item in Model)
         {
@@ -25,7 +22,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4" align="center">
+        <td colspan="4" align="justify">
            
                @Html.DisplayFor(modelItem => item.Text) 
         </td>
@@ -50,14 +47,11 @@
         </td>
     </tr>
         <tr >
-            @if (usr != null)
-            {
-                <td colspan="3"  align="right">
-                    @Html.ActionLink("Добавить комментарий", "AddComment", new { id = item.Id })
-                </td>
-            }
+            <td colspan="3"  align="right">
+                    @Html.ActionLink("Добавить комментариЙ", "AddComment", "Comment", new { id = item.Id }, null)
+           </td>
             <td colspan="4" align="right">
-                @Html.ActionLink("посмотреть комментарии", "ViewComment", new { id = item.Id })
+                @Html.ActionLink("Посмотреть комментарии", "ViewComment", "Comment", new { id = item.Id }, null)
             </td>
         </tr>
 }

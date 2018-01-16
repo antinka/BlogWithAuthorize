@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BlogUsingEF.BLL.Services
 {
-    public class AnketServices : IAnketServices
+    public class AnketServices : IAnketService
     {
         IUnitOfWork Database { get; set; }
         public AnketServices(IUnitOfWork uow)
         {
             Database = uow;
         }
-        // save new anket in db
+        // Save new anket in db.
         public void AddNewAnket(string Name, string Gender, string[] Operator, string UseCodeOperatop)
         {
             string oper = "";

@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace BlogUsingEF.DAL.Repositories
 {
+    //Implementation IRepository which typed Article.
     public class ArticleRepository:IRepository<Article>
     {
-        //implementation IRepository which typed Article
+        
         private BlogContext db;
 
        public ArticleRepository(BlogContext context)

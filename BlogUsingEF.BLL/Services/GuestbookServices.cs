@@ -18,14 +18,14 @@ namespace BlogUsingEF.BLL.Services
         {
             Database = uow;
         }
-        // return all reviews which has in db
+        // Return all reviews which has in db.
         public IEnumerable<GuestbookDTO> GetGuestbook()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Guestbook, GuestbookDTO>());
             IMapper mapper = config.CreateMapper();
             return mapper.Map<IEnumerable<Guestbook>, List<GuestbookDTO>>(Database.Guestbooks.GetList());
         }
-        // add new review
+        // Add new review.
         public void AddToGuestbook(GuestbookDTO guestbookDTO)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GuestbookDTO, Guestbook>());

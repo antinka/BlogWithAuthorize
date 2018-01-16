@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogUsingEF.DAL.Repositories
 {
+    //Implementation IRepository which typed Guestbook.
     public class GuestbookRepository : IRepository<Guestbook>
     {
         private BlogContext db;

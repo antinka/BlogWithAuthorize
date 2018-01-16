@@ -12,10 +12,11 @@ namespace BlogUsingEF.Util
     {
         public override void Load()
         {
-            Bind<IUserServicesAddEnter>().To<UserService>();
             Bind<IArticleServiceAddGetArticleComment>().To<ArticleService>();
-            Bind<IAnketServices>().To<AnketServices>();
+            Bind<IAnketService>().To<AnketServices>();
             Bind<IGuestbookServices>().To<GuestbookServices>();
+            Bind<ICommentServices>().To<CommentServices>();
+            Bind<ITagServices>().To<TagServices>();
         }
     }
 }

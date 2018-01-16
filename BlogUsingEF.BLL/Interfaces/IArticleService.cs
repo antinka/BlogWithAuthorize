@@ -10,10 +10,10 @@ namespace BlogUsingEF.BLL.Interfaces
     public interface IArticleServiceAddGetArticleComment
     {
         IEnumerable<ArticleDTO> GetArticles();
-        IEnumerable<CommentDTO> GetComments();
         ArticleDTO GetArticlesById(int id);
-        void AddNewArticle(ArticleDTO articleDTO, int userId);
-        void AddNewComment(CommentDTO commentDTO, int articleId, int userId);
+        void AddNewArticle(ArticleDTO articleDTO, string userId);
+        void AddTagsToArticle(int articleId, string tags);
         void DeleteArticle(int id);
+        void Dispose();
     }
 }

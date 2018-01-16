@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace BlogUsingEF.DAL.Repositories
 {
+    //Implementation IRepository which typed Comment.
    public class CommentRepository : IRepository<Comment>
     {
-        //implementation IRepository which typed Comment
+        
         private BlogContext db;
 
         public CommentRepository(BlogContext context)
@@ -51,5 +52,6 @@ namespace BlogUsingEF.DAL.Repositories
         {
             db.Entry(item).State = EntityState.Modified;
         }
+
     }
 }

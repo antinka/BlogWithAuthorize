@@ -31,15 +31,17 @@ header {
 .main-body {
     float: right;
     width: 80%;
-   /* border-left-color: black;
+    border-left-color: black;
     border-left-style: double;
-    border-left-width: 4px;*/
+    border-left-width: 4px;
+  /* position: relative;*/
 }
 
 .right-sidebar {
     padding: 10px;
     float: left;
     width: 20%;
+    /* position: relative;*/
 }
 
 footer {

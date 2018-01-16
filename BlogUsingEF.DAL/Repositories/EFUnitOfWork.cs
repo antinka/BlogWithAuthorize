@@ -5,20 +5,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlogUsingEF.DAL.Entities;
+using BlogUsingEF.DAL.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BlogUsingEF.DAL.Repositories
 {
+    //Using this we will work with db.
    public class EFUnitOfWork : IUnitOfWork
     {
         private BlogContext db;
         private ArticleRepository articleRepository;
         private CommentRepository commentRepository;
-        private UserRepository userRepository;
         private GuestbookRepository guestbookRepository;
         private AnketRepository anketRepository;
-        public EFUnitOfWork()
+        private TagRepository tagRepository;
+        private ApplicationUserManager applicationUserManager;
+        private ApplicationRoleManager  applicationRoleManager;
+     
+        public EFUnitOfWork(string connectionString)
         {
-            db = new BlogContext();
+            db = new BlogContext(connectionString);
+            applicationUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+            applicationRoleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
+          
+        }
+        public ApplicationUserManager ApplicationUserManager
+        {
+            get { return applicationUserManager; }
+        }
+
+        public ApplicationRoleManager ApplicationRoleManager
+        {
+            get { return applicationRoleManager; }
+        }
+
+        public async Task SaveAsync()
+        {
+            await db.SaveChangesAsync();
         }
         public IRepository<Article> Articles
         {
@@ -29,7 +52,15 @@ namespace BlogUsingEF.DAL.Repositories
                 return articleRepository;
             }
         }
-
+        public IRepository<Tag> Tags
+        {
+            get
+            {
+                if (tagRepository == null)
+                    tagRepository = new TagRepository(db);
+                return tagRepository;
+            }
+        }
         public IRepository<Comment> Comments
         {
             get
@@ -37,16 +68,6 @@ namespace BlogUsingEF.DAL.Repositories
                 if (commentRepository == null)
                     commentRepository = new CommentRepository(db);
                 return commentRepository;
-            }
-        }
-
-        public IRepository<User> Users
-        {
-            get
-            {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
-                return userRepository;
             }
         }
 
@@ -67,6 +88,25 @@ namespace BlogUsingEF.DAL.Repositories
                     anketRepository = new AnketRepository(db);
                 return anketRepository;
             }
+        }
+        private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

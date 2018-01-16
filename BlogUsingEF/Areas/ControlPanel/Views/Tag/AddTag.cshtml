@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "AddTag";
+}
+
+<h2>AddTag</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.TextBox("tags", "#", new { @class = "form-control" });<br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Отправить" class="btn btn-default" />
+        </div>
+    </div>
+}

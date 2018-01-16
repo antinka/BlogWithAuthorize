@@ -8,7 +8,7 @@ namespace BlogUsingEF.DAL.Interfaces
 {
    public interface IRepository<T> where T : class
     {
-        //main methods for work with db
+        //Main methods for work with db.
         IEnumerable<T> GetList(); 
         T GetById(int id); 
         void Create(T item); 

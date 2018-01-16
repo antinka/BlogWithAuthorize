@@ -13,8 +13,9 @@ namespace BlogUsingEF.BLL.DTO
         public string Title { get; set; }
         public DateTime? DataPublish { get; set; }
         public string Text { get; set; }
-        public User User { get; set; }
-        public int? UserId { get; set; }
         public string Tags { get; set; }
+        public ApplicationUser User { get; set; }
+        public IList<CommentDTO> Comments { get; set; }
+   
     }
 }

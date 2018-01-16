@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogUsingEF.DAL.Repositories
 {
+    //Implementation IRepository which typed Anket.
     public class AnketRepository : IRepository<Anket>
     {
         private BlogContext db;

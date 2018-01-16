@@ -1,0 +1,63 @@
+﻿@model BlogUsingEF.Models.GuestbookView
+@{
+    ViewBag.Title = "Гостевая";
+}
+
+<h2>Гостевая</h2>
+
+<table class="table">
+
+
+    @foreach (var item in ViewBag.Guestbooks)
+    {
+        <tr>
+            <th>
+                Имя Автора
+            </th>
+            <td>
+                @item.NameAuthor
+            </td>
+            <th>
+                Дата публикации
+            </th>
+            <td>
+                @item.DataPublish
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                @item.Text
+            </td>
+        </tr>
+    }
+</table>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NameAuthor, "Имя", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-offset-4">
+                @Html.EditorFor(model => model.NameAuthor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NameAuthor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, "Отзыв", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-offset-4">
+                @Html.TextAreaFor(model => model.Text, 5, 300, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <input type="submit" value="Отправить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

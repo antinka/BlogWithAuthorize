@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogUsingEF.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,8 @@ namespace BlogUsingEF.BLL.DTO
         public int Id { get; set; }
         public DateTime? DataPublish { get; set; }
         public string Text { get; set; }
+        public ApplicationUser User { get; set; }
         public ArticleDTO Article { get; set; }
         public int? ArticleId { get; set; }
-        public UserDTO User { get; set; }
-        public int? UserId { get; set; }
     }
 }
